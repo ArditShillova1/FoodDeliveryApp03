@@ -1,0 +1,81 @@
+﻿@model IEnumerable<IGrouping<string, MenuItem>>
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .star-rating {
+        display: inline-block;
+        font-size: 30px;
+        color: #FFD700;
+    }
+</style>
+
+<h1>Index</h1>
+<div class="MenuItem" >
+@foreach (var group in Model)
+{
+    <h2>
+        <a href="@Url.Action("Profile", "Profile", new { id =  group.First().UserId })">@group.Key</a>
+    </h2>
+
+    <div class="row">
+        @foreach (var item in group)
+        {
+            <div class="col-md-4">
+                <h2>@item.Name</h2>
+                <p>Price: @item.Price€</p>
+                <p>Description: @item.Description</p>
+                <img src="@Url.Content(item.ImagePath)" alt="Profile Picture" width="200" height="200" />
+                <form asp-controller="Carts" asp-action="AddToCart" method="post">
+                    <input type="hidden" name="menuItemId" value="@item.Id" />
+                    <button type="submit">Add to Cart</button>
+                </form>
+
+                <h4>Reviews:</h4>
+                    
+                    @if (item.Reviews != null && item.Reviews.Any())
+                        {
+                            double averageRating = item.Reviews.Average(r => r.Rating);
+                            <span class="star-rating">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= averageRating)
+                                        {
+                                            <span>&#9733;</span> 
+                                        }
+                                        else if (i - 0.5 <= averageRating)
+                                        {
+                                            <span>&#9734;</span>
+                                        }
+                                        else if (i - 0.25 <= averageRating)
+                                        {
+                                            <span>&#9734;</span>
+                                        }
+                                        else
+                                        {
+                                            <span>&#9734;</span>
+                                        }
+                                    }
+                                </span>
+                           
+                        }
+                    else
+                        {
+                            <p>No reviews for this menu item yet.</p>
+                        }
+                    
+                <form asp-controller="Reviews" asp-action="SubmitReviewForMenuItem" method="post">
+                    <input type="hidden" name="menuItemId" value="@item.Id" />
+                    <label>Rating: </label>
+                    <input type="number" name="rating" min="1" max="5" required />
+                    <br />
+                    <label>Review: </label>
+                    <textarea name="reviewText" rows="3" style="resize:none;" required></textarea>
+                    <br />
+                    <button type="submit">Submit Review</button>
+                </form>
+            </div>
+        }
+    </div>
+}
+</div>

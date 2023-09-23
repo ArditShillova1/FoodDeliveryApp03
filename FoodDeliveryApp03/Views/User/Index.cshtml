@@ -1,0 +1,41 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+
+<h1>User List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Is Banned</th>
+            <th>Ban Expiration Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Email</td>
+                <td>@(user is FoodDeliveryApp03.Models.ApplicationUser && (user as FoodDeliveryApp03.Models.ApplicationUser).IsBanned ? "Yes" : "No")</td>
+                <td>@(user is FoodDeliveryApp03.Models.ApplicationUser && (user as FoodDeliveryApp03.Models.ApplicationUser).IsBanned ? (user as FoodDeliveryApp03.Models.ApplicationUser).BanExpirationDate.ToString() : "Not banned")</td>
+                <td>
+                    <form asp-action="BanTemporary" asp-route-userId="@user.Id" method="post">
+                        <button class="btn btn-warning" type="submit">Ban Temporary</button>
+                    </form>
+                    <form asp-action="BanPermanent" asp-route-userId="@user.Id" method="post">
+                        <button class="btn btn-danger" type="submit">Ban Permanent</button>
+                    </form>
+                    <form asp-action="Unban" asp-route-userId="@user.Id" method="post">
+                        <button class="btn btn-success" type="submit">Unban</button>
+                    </form>
+                    <form asp-action="Delete" asp-route-userId="@user.Id" method="post">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    

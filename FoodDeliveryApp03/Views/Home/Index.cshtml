@@ -1,0 +1,40 @@
+﻿@model List<FoodDeliveryApp03.Models.MenuItem>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<div class="div2">
+    <div class="home-div">
+        <div class="div2">
+            <h1 class="Text">Welcome</h1>
+            <h2 class="Text">to Food Delivery App</h2>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h3>Top Rated Food Items</h3>
+    <p class="p" ></p>
+    <div class="card-container row1">
+        @foreach (var foodItem in Model.Take(3))
+        {
+            <div class="card mb-4">
+                <img src="@foodItem.ImagePath" alt="@foodItem.Name" class="img-fluid">
+                <div class="card-content">
+                    <h5>@foodItem.Name</h5>
+                    <p class="card-text">@foodItem.Description</p>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="@Url.Action("Details", "MenuItems", new { id = foodItem.Id })"
+                           class="btn btn-sm btn-outline-secondary">View Details</a>
+                        </div>
+                        <small class="text-muted">Average Rating: @foodItem.AverageRating.ToString("0.0")</small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Choose Your Role";
+}
+
+<h1>Choose Your Role</h1>
+<p>Please select your role:</p>
+
+<form asp-action="ChooseYourRole" asp-controller="AppRoles" method="post">
+    <select name="selectedRole">
+        <option value="User">User</option>
+        <option value="Restaurant-Manager">Restaurant Manager</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>

@@ -1,0 +1,80 @@
+﻿@{
+    var profile = ViewBag.Profile as FoodDeliveryApp03.Models.ProfilePicture;
+    var menuItems = ViewBag.MenuItems as List<FoodDeliveryApp03.Models.MenuItem>;
+}
+<style>
+    #map{
+        height:300px;
+        width:600px;
+    }
+</style>
+
+@if (profile != null)
+{
+    <h1>Restaurant Profile - @profile.RestaurantName</h1>
+
+    <div>
+        <h3>Profile Picture</h3>
+        <a href="@Url.Action("Create", "Profile")" class="btn btn-primary">Create</a>
+
+        @if (!string.IsNullOrEmpty(profile.ImagePath))
+        {
+            <img src="@Url.Content(profile.ImagePath)" alt="Profile Picture" width="200" height="200" />
+        }
+        else
+        {
+            <p>No profile picture available.</p>
+        }
+    </div>
+
+    <h2>Menu Items:</h2>
+    <a href="@Url.Action("Create", "MenuItems")" class="btn btn-primary">Create</a>
+    <ul>
+        @foreach (var menuItem in menuItems)
+        {
+            <li>
+                @menuItem.Name - @menuItem.Description
+                <img src="@Url.Content(menuItem.ImagePath)" alt="Picture" width="70" height="70" />
+                <a asp-action="Details" asp-route-id="@menuItem.Id">Details</a>
+                <a asp-action="Delete" asp-controller="MenuItems" asp-route-id="@menuItem.Id">Delete</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <a href="@Url.Action("Create", "Profile")" class="btn btn-primary">Create</a>
+    <p>No profile found.</p>
+}
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
+
+<h2>Restaurant Location</h2>
+<div id="map"></div>
+
+<script>
+    function initMap() {
+
+        var latitude = @profile.Latitude;
+        var longitude = @profile.Longitude;
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: { lat: latitude, lng: longitude }
+        });
+
+        var marker = new google.maps.Marker({
+            position: { lat: latitude, lng: longitude },
+            map: map,
+            title: '@profile.RestaurantName'
+        });
+    }
+
+    window.onload = initMap;
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBluF2ghHonSKrpvcxRbGVB7BI2UzFKf3s&callback=initMap"></script>

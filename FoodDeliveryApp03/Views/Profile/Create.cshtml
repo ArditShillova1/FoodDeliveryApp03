@@ -1,0 +1,65 @@
+﻿@model FoodDeliveryApp03.Models.ProfilePicture
+
+<h1>Create Profile</h1>
+
+@using (Html.BeginForm("Create", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RestaurantName)
+        @Html.TextBoxFor(model => model.RestaurantName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.RestaurantName)
+    </div>
+
+    <div class="form-group">
+        <label for="photo">Profile Picture</label>
+        <input type="file" id="photo" name="photo" class="form-control-file" accept="image/*">
+    </div>
+
+    <div class="form-group">
+        <label for="map">Pick Location</label>
+        <div id="map" style="height: 300px;"></div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Latitude")
+        @Html.TextBoxFor(model => model.Latitude, new { @class = "form-control", placeholder = "Latitude", @readonly = "readonly" })
+        @Html.ValidationMessageFor(model => model.Latitude)
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Longitude")
+        @Html.TextBoxFor(model => model.Longitude, new { @class = "form-control", placeholder = "Longitude", @readonly = "readonly" })
+        @Html.ValidationMessageFor(model => model.Longitude)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+}
+
+@section Scripts {
+    <script>
+        var map;
+        var latitudeField = document.getElementById("Latitude");
+        var longitudeField = document.getElementById("Longitude");
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 42.6026, lng: 20.9030 },
+                zoom: 12
+            });
+
+            var marker = new google.maps.Marker({
+                position: { lat: 42.6026, lng: 20.9030 },
+                map: map,
+                draggable: true
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                latitudeField.value = event.latLng.lat();
+                longitudeField.value = event.latLng.lng();
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBluF2ghHonSKrpvcxRbGVB7BI2UzFKf3s&callback=initMap"></script>
+}

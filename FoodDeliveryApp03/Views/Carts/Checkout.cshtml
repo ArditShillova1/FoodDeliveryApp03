@@ -1,0 +1,46 @@
+﻿@model FoodDeliveryApp03.Models.Cart
+
+<h1>Checkout</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Order Summary</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.MenuItem.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.MenuItem.Price</td>
+                        <td>@(item.Quantity * item.MenuItem.Price)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <h3>Total: $@ViewBag.TotalPrice</h3>
+
+        <h2>Choose Payment Method</h2>
+        <form asp-controller="Carts" asp-action="Checkout" method="post">
+            <label for="paymentMethod">Select Payment Method:</label>
+            <select id="paymentMethod" name="paymentMethod" class="form-control">
+                <option value="paypal">PayPal</option>
+                <option value="dummy">Dummy Payment</option>
+            </select>
+            <br />
+            <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        </form>
+        <form asp-controller="Carts" asp-action="PlaceOrder" method="post">
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+
+</div>
