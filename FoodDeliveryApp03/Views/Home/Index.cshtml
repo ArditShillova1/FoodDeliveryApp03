@@ -3,36 +3,39 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-<div class="div2">
-    <div class="home-div">
-        <div class="div2">
-            <h1 class="Text">Welcome</h1>
-            <h2 class="Text">to Food Delivery App</h2>
+
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+
+<div class="hero-container">
+    <div class="container">
+        <h1 class="hero-title">Welcome to Food Delivery App</h1>
+        <p class="hero-subtitle">Discover the best restaurants and food items in your area.</p>
+        <div class="search-container">
+            <form asp-controller="Home" asp-action="Search" method="post" class="form-inline">
+                <input type="text" class="search-input" id="SearchTerm" name="SearchTerm" placeholder="Search for Restaurants or Menu Items">
+                <button type="submit" class="search-button">Search</button>
+            </form>
         </div>
     </div>
 </div>
 
+
 <div class="container mt-5">
-    <h3>Top Rated Food Items</h3>
-    <p class="p" ></p>
-    <div class="card-container row1">
+    <h2 class="top-rated-title">Top Rated Food Items</h2>
+    <div class="card-container">
         @foreach (var foodItem in Model.Take(3))
         {
             <div class="card mb-4">
                 <img src="@foodItem.ImagePath" alt="@foodItem.Name" class="img-fluid">
                 <div class="card-content">
-                    <h5>@foodItem.Name</h5>
-                    <p class="card-text">@foodItem.Description</p>
+                    <h3 class="card-title">@foodItem.Name</h3>
+                    <p class="card-description">@foodItem.Description</p>
                 </div>
                 <div class="card-footer">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <a href="@Url.Action("Details", "MenuItems", new { id = foodItem.Id })"
-                           class="btn btn-sm btn-outline-secondary">View Details</a>
-                        </div>
-                        <small class="text-muted">Average Rating: @foodItem.AverageRating.ToString("0.0")</small>
+                    <div class="btn-group">
+                        <a href="@Url.Action("Profile", "Profile", new { id = foodItem.UserId })" class="btn btn-sm btn-outline-primary card-link">View Details</a>
                     </div>
+                    <small>Average Rating: @foodItem.AverageRating.ToString("0.0")</small>
                 </div>
             </div>
         }

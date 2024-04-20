@@ -1,0 +1,125 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #F7F7F7;
+}
+
+.hero-container {
+    background: url(https://img.freepik.com/free-photo/chicken-wings-barbecue-sweetly-sour-sauce-picnic-summer-menu-tasty-food-top-view-flat-lay_2829-6471.jpg?w=2000) no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    padding: 100px 0;
+    color: #fff;
+    position: relative;
+
+}
+
+.search-container {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+    -webkit-text-stroke: 1px black;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+
+}
+
+.top-rated-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    flex-basis: calc(33.33% - 20px);
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+    .card img {
+        width: 100%;
+        object-fit: cover;
+        height: 200px;
+        border-radius: 10px 10px 0 0;
+    }
+
+.card-content {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.card-footer {
+    padding: 10px 20px;
+    background: #f9f9f9;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-link {
+    text-decoration: none;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+
+
+.search-input {
+    width: 100%;
+    border: none;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.search-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    margin:10px;
+    border-radius: 5px;
+
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    .search-button:hover {
+        background-color: #0056b3;
+    }
+
+

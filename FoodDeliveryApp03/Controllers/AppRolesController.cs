@@ -10,7 +10,7 @@ namespace FoodDeliveryApp03.Controllers
     public class AppRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
     public AppRolesController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
     {

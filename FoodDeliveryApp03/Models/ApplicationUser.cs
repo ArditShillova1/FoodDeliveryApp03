@@ -20,8 +20,6 @@ namespace FoodDeliveryApp03.Models
         [Required]
         public string Address { get; set; }
         public string RestaurantName { get; set; }
-        public List<MenuItem> MenuItems{ get; set; }
-        public ProfilePicture ProfilePicture { get; set; }
         public bool IsBanned { get; set; }
         public DateTime? BanExpirationDate { get; set; }
     }

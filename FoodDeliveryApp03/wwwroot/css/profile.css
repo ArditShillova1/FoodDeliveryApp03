@@ -1,0 +1,120 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+.create-button1 {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .create-button1:hover {
+        background-color: #0056b3;
+    }
+
+
+#container {
+    width: 80%;
+    margin: 0 auto; 
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    position:relative;
+    margin-top:20px;
+    margin-bottom:60px;
+    color:black;
+}
+
+#restaurant-name {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 5px;
+    color:black;
+}
+#profile-picture {
+    text-align: center;
+    position: relative;
+}
+
+#background-overlay {
+    position: absolute;
+    width: 100%;
+    opacity:0.7;
+    height:220px;
+    background: url('https://png.pngtree.com/background/20230527/original/pngtree-lighting-of-cafe-table-and-chairs-picture-image_2760365.jpg') no-repeat center center;
+    background-size: cover;
+    top: 0;
+}
+
+.profile-image {
+    position: relative;
+    margin-top:150px;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: white;
+    
+}
+
+#menu {
+    margin-top: 20px;
+}
+
+.menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.menu-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 200px;
+    text-align: center;
+}
+
+    .menu-item img {
+        width: 100px;
+        height: 100px;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+#map {
+    height: 300px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+.create-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #1877F2; 
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    text-decoration:none ;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.create-button:hover {
+    background-color: #1264DA;
+}

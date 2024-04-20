@@ -1,0 +1,120 @@
+﻿.register {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 20px;
+    margin-bottom:60px;
+
+}
+
+.register_box {
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(212.38deg, rgba(242, 57, 127, 0.7) 0%, rgba(175, 70, 189, 0.71) 100%), url(https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cmVzdGF1cmFudHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80);
+    color: #fff;
+}
+
+.left {
+    width: 80%;
+    padding: 20px;
+    padding-bottom: 20px;
+    color:black;
+    background:white;
+}
+
+    .left .top_link a {
+        color: black;
+        font-weight: 400;
+        text-decoration: none;
+    }
+
+    .left .top_link {
+        height: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+        color:black;
+    }
+
+    .left .contact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .left h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .left .form-floating {
+        width: 80%;
+        margin: 10px 0;
+    }
+
+    .left input {
+        border: none;
+        margin: 10px 0;
+        border-bottom: 1px solid #4f3067;
+        padding: 10px;
+        width: 100%;
+        color:black;
+        background: transparent;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .left .form-group {
+        margin: 10px 0;
+    }
+
+.role-buttons {
+    display: flex;
+    align-items: center;
+}
+.btn-role {
+    background: transparent;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .btn-role:hover {
+        background: #0056b3;
+    }
+
+    .btn-role + .btn-role {
+        margin-left: 10px;
+    }
+
+.button-image {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    text-align: center;
+    background-position: center;
+    margin-right: 10px;
+}
+
+.user {
+    background-image: url('https://www.pngkey.com/png/full/72-729716_user-avatar-png-graphic-free-download-icon.png');
+}
+
+.manager {
+    background-image: url('https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Free-Image.png');
+}

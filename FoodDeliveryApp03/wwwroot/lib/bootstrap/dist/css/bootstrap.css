@@ -3870,6 +3870,7 @@ textarea.form-control-lg {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
+  justify-content:flex-end;
   margin-bottom: 0;
   list-style: none;
 }
@@ -3967,7 +3968,7 @@ textarea.form-control-lg {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
@@ -3981,7 +3982,7 @@ textarea.form-control-lg {
   display: flex;
   flex-wrap: inherit;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 .navbar-brand {
   padding-top: 0.3125rem;
@@ -3992,11 +3993,11 @@ textarea.form-control-lg {
   white-space: nowrap;
 }
 .navbar-nav {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  justify-content:flex-end !important;
 }
 .navbar-nav .nav-link {
   padding-right: 0;
@@ -4015,6 +4016,7 @@ textarea.form-control-lg {
   flex-basis: 100%;
   flex-grow: 1;
   align-items: center;
+  justify-content:flex-end;
 }
 
 .navbar-toggler {
@@ -4055,7 +4057,7 @@ textarea.form-control-lg {
   overflow-y: auto;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
   .navbar-expand-sm {
     flex-wrap: nowrap;
     justify-content: flex-start;

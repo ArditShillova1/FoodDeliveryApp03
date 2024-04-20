@@ -88,6 +88,7 @@ namespace FoodDeliveryApp03.Controllers
             return RedirectToAction("Index");
         }
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [HttpGet]
         public async Task<IActionResult> Profile(string id)
         {

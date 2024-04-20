@@ -2,80 +2,113 @@
 @{
     ViewData["Title"] = "Index";
 }
-<style>
-    .star-rating {
-        display: inline-block;
-        font-size: 30px;
-        color: #FFD700;
-    }
-</style>
-
-<h1>Index</h1>
-<div class="MenuItem" >
 @foreach (var group in Model)
 {
-    <h2>
-        <a href="@Url.Action("Profile", "Profile", new { id =  group.First().UserId })">@group.Key</a>
-    </h2>
-
-    <div class="row">
-        @foreach (var item in group)
-        {
-            <div class="col-md-4">
-                <h2>@item.Name</h2>
-                <p>Price: @item.Price€</p>
-                <p>Description: @item.Description</p>
-                <img src="@Url.Content(item.ImagePath)" alt="Profile Picture" width="200" height="200" />
-                <form asp-controller="Carts" asp-action="AddToCart" method="post">
-                    <input type="hidden" name="menuItemId" value="@item.Id" />
-                    <button type="submit">Add to Cart</button>
-                </form>
-
-                <h4>Reviews:</h4>
-                    
-                    @if (item.Reviews != null && item.Reviews.Any())
+    <div id="container">
+        <h1 style="text-align: center;">Restaurants</h1>
+        <div class="MenuItem">
+        
+                <h2>
+                    <a href="@Url.Action("Profile", "Profile", new { id = group.First().UserId })">@group.Key</a>
+                </h2>
+                <div class="div3">
+                        <div class="">
+                            @foreach (var item in group)
                         {
-                            double averageRating = item.Reviews.Average(r => r.Rating);
-                            <span class="star-rating">
-                                    @for (int i = 1; i <= 5; i++)
+                            <div class="div-hover1">
+                                <div class="menu-container">
+                                    <img src="@Url.Content(item.ImagePath)" alt="Profile Picture" width="200" height="200" />
+                                    <div class="div-hover">
+                                        <form class="form1" asp-controller="Carts" asp-action="AddToCart" method="post">
+                                            <input type="hidden" name="menuItemId" value="@item.Id" />
+                                            <button class="btn1" type="submit">Add to Cart</button>
+                                        </form>
+                                
+                                    </div>
+
+                                </div>
+                                <div class="rating-system">
+                                    <form asp-controller="Reviews" asp-action="SubmitReviewForMenuItem" method="post">
+                                        <input type="hidden" name="menuItemId" value="@item.Id" />
+                                        <div class="star-rating">
+                                            <input type="radio" id="rating1" name="rating" value="1" required />
+                                            <label for="rating5">&#9733;</label>
+                                            <input type="radio" id="rating2" name="rating" value="2" />
+                                            <label for="rating4">&#9733;</label>
+                                            <input type="radio" id="rating3" name="rating" value="3" />
+                                            <label for="rating3">&#9733;</label>
+                                            <input type="radio" id="rating4" name="rating" value="4" />
+                                            <label for="rating2">&#9733;</label>
+                                            <input type="radio" id="rating5" name="rating" value="5" />
+                                            <label for="rating1">&#9733;</label>
+                                        </div>
+                                        <button type="submit">Submit Review</button>
+                                    </form>
+                                </div>
+                                <br/>
+                                <div style="display:flex; justify-content:center; ">
+                                    @if (item.Reviews != null && item.Reviews.Any())
                                     {
-                                        if (i <= averageRating)
-                                        {
-                                            <span>&#9733;</span> 
-                                        }
-                                        else if (i - 0.5 <= averageRating)
-                                        {
-                                            <span>&#9734;</span>
-                                        }
-                                        else if (i - 0.25 <= averageRating)
-                                        {
-                                            <span>&#9734;</span>
-                                        }
-                                        else
-                                        {
-                                            <span>&#9734;</span>
-                                        }
+                                        double averageRating = item.Reviews.Average(r => r.Rating);
+                                        <span class="star-rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= averageRating)
+                                                {
+                                                    <span>&#9733;</span>
+                                                }
+                                                else if (i - 0.5 <= averageRating)
+                                                {
+                                                    <span>&#9734;</span>
+                                                }
+                                                else if (i - 0.25 <= averageRating)
+                                                {
+                                                    <span>&#9734;</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>&#9734;</span>
+                                                }
+                                            }
+                                        </span>
                                     }
-                                </span>
-                           
+                                    else
+                                    {
+                                        <span class="star-rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <span>&#9734;</span>
+                                            }
+                                        </span>
+                                    }
+                                </div>
+
+                                <h2 style="font-size: 30px; text-align: center;">@item.Name
+                                    <h2 style="display:flex; justify-content:center; "><button class="rate-button" style=" ">&#9734</button></h2>
+                                </h2>
+                                <p style="font-size: 20px; text-align: center;">@item.Price€</p>
+                            </div>
                         }
-                    else
-                        {
-                            <p>No reviews for this menu item yet.</p>
-                        }
-                    
-                <form asp-controller="Reviews" asp-action="SubmitReviewForMenuItem" method="post">
-                    <input type="hidden" name="menuItemId" value="@item.Id" />
-                    <label>Rating: </label>
-                    <input type="number" name="rating" min="1" max="5" required />
-                    <br />
-                    <label>Review: </label>
-                    <textarea name="reviewText" rows="3" style="resize:none;" required></textarea>
-                    <br />
-                    <button type="submit">Submit Review</button>
-                </form>
-            </div>
-        }
+                    </div>
+                </div>
+        
+        </div>
     </div>
 }
-</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const showRatingButtons = document.querySelectorAll('.rate-button');
+        const ratingSystems = document.querySelectorAll('.rating-system');
+
+        showRatingButtons.forEach(function (button, index) {
+            button.addEventListener('click', function () {
+                const ratingSystem = ratingSystems[index];
+                if (ratingSystem.style.display === 'none' || ratingSystem.style.display === '') {
+                    ratingSystem.style.display = 'block';
+                } else {
+                    ratingSystem.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>

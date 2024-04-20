@@ -24,10 +24,24 @@ namespace FoodDeliveryApp03.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var notifications = await _context.Notifications
-                .Where(notification => notification.UserId == userId) 
+                .Where(notification => notification.UserId == userId)
+                .Select(notification => new
+                {
+                    notification.Id,
+                    notification.OrderId,
+                    notification.TotalAmount,
+                    notification.MenuItemPhotoUrl,
+                    notification.UserAddress,
+                    notification.UserFirstName,
+                    notification.UserLastName
+                })
                 .ToListAsync();
+
             return Ok(notifications);
         }
+
+
+
 
 
         [HttpGet("DeleteNotification/{notificationId}")]

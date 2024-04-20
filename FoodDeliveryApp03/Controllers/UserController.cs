@@ -90,7 +90,7 @@ namespace FoodDeliveryApp03.Controllers
                 var result = await _userManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
-                    // Handle error
+                    
                 }
             }
 

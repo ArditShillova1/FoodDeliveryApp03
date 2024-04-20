@@ -68,10 +68,13 @@ namespace FoodDeliveryApp03.Areas.Identity.Pages.Account.Manage
 
             Username = userName;
 
-            Input = new InputModel
+            if (phoneNumber != null)
             {
-                PhoneNumber = phoneNumber
-            };
+                Input = new InputModel
+                {
+                    PhoneNumber = user.PhoneNumber
+                };
+            }
         }
 
         public async Task<IActionResult> OnGetAsync()

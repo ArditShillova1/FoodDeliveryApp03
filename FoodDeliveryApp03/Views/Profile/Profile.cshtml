@@ -2,44 +2,55 @@
     var profile = ViewBag.Profile as FoodDeliveryApp03.Models.ProfilePicture;
     var menuItems = ViewBag.MenuItems as List<FoodDeliveryApp03.Models.MenuItem>;
 }
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-<style>
-    #map{
-        height:300px;
-        width:600px;
-    }
-</style>
-<div class="div1">
-<h1>Restaurant Profile - @profile.RestaurantName</h1>
 
-<div>
-    <h3>Profile Picture</h3>
-    @if (!string.IsNullOrEmpty(profile.ImagePath))
-    {
-        <img class="profile" src="@Url.Content(profile.ImagePath)" alt="Profile Picture" width="150" height="150" />
-    }
-    else
-    {
-        <p>No profile picture available.</p>
-    }
-</div>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="container">
 
+        <div id="profile-picture">
 
-<h2>Menu Items:</h2>
+            <div id="background-overlay"></div>
+            @if (!string.IsNullOrEmpty(profile.ImagePath))
+            {
+                <img class="profile-image" src="@Url.Content(profile.ImagePath)" alt="Profile Picture" />
+            }
+            else
+            {
+                <p>No profile picture available.</p>
+            }
 
-<ul >
-    <div >
-        @foreach (var menuItem in menuItems)
-        {
-            <p>@menuItem.Name - @menuItem.Description <img src="@Url.Content(menuItem.ImagePath)" alt="Picture" width="70" height="70" />  </p>
-        }
+            <h1 id="restaurant-name"> @profile.RestaurantName</h1>
+        </div>
+
+        <h2 id="menu">Menu Items:</h2>
+
+        <div class="menu-items">
+            @foreach (var menuItem in menuItems)
+            {
+                <div class="menu-item">
+                    <p>@menuItem.Name - @menuItem.Description</p>
+                    <img src="@Url.Content(menuItem.ImagePath)" alt="Picture" />
+                    <form class="form1" asp-controller="Carts" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="menuItemId" value="@menuItem.Id" />
+                        <button class="btn1" type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            }
+        </div>
+
+        <h2>Restaurant Location</h2>
+
+        <div id="map"></div>
     </div>
-</ul>
-<h2>Restaurant Location</h2>
-
-<div id="map" style="width: 100%; height: 400px;"></div>
-
+</body>
+</html>
 
 <script>
     function initMap() {

@@ -1,8 +1,24 @@
 ﻿@model Order
+<style>
+    .order-confirmation {
+        text-align: center;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .thank-you {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+</style>
 <div class="container mt-5">
-    
-    <h1>Order Confirmation</h1>
-
-    <p>Your order with  has been successfully placed.</p>
-
+    <div class="order-confirmation">
+        <h1>Order Confirmation</h1>
+        <p class="thank-you">Thank you for your order!</p>
+        <p>Your order has been successfully placed.</p>
+    </div>
 </div>

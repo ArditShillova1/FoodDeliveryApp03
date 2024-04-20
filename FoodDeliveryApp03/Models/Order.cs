@@ -10,8 +10,15 @@ namespace FoodDeliveryApp03.Models
         public DateTime OrderDate { get; set; }
         public int CartId { get; set; }
         public Cart Cart { get; set; }
-        public decimal TotalAmount { get; set; }    
-        public List<OrderItem> OrderItems { get; set; }
+        public decimal TotalAmount { get; set; }
+
+        public string UserId { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
+        public string UserAddress { get; set; }
+
+        public List<Notification> Notifications { get; set; }
+        public ApplicationUser User { get; set; }
         public OrderStatus Status { get; set; }
 
     }

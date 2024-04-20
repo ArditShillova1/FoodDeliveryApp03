@@ -28,7 +28,7 @@ public class ReviewsController : Controller
     }
 
     [HttpPost]
-    public IActionResult SubmitReviewForMenuItem(int menuItemId, int rating, string reviewText)
+    public IActionResult SubmitReviewForMenuItem(int menuItemId, int rating , string reviewText)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -42,7 +42,6 @@ public class ReviewsController : Controller
         {
             UserId = userId,
             Rating = rating,
-            ReviewText = reviewText,
             MenuItemId = menuItemId,
             CreatedAt = DateTime.UtcNow 
         };

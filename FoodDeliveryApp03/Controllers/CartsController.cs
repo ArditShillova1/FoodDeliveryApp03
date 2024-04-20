@@ -15,6 +15,8 @@ using PayPalHttp;
 using FoodDeliveryApp03.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using Order = FoodDeliveryApp03.Models.Order;
+using Microsoft.Exchange.WebServices.Data;
 
 namespace FoodDeliveryApp03.Controllers
 {
@@ -211,8 +213,12 @@ namespace FoodDeliveryApp03.Controllers
 
             var user = await _userManager.GetUserAsync(User) as ApplicationUser;
 
-            var order = new Models.Order
+            var order = new Order
             {
+                UserId = user.Id,
+                UserFirstName = user.FirstName,
+                UserLastName = user.LastName,
+                UserAddress = user.Address,
                 OrderDate = DateTime.Now,
                 TotalAmount = cart.Items.Sum(item => item.MenuItem.Price * item.Quantity),
                 Status = OrderStatus.Pending
@@ -221,7 +227,6 @@ namespace FoodDeliveryApp03.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-          
             var cartItemsByRestaurant = cart.Items
                 .GroupBy(cartItem => cartItem.MenuItem.UserId)
                 .ToList();
@@ -229,29 +234,33 @@ namespace FoodDeliveryApp03.Controllers
             foreach (var restaurantCartItems in cartItemsByRestaurant)
             {
                 var restaurantId = restaurantCartItems.Key;
-
-                var restaurantTotalPrice = restaurantCartItems
-                    .Sum(cartItem => cartItem.MenuItem.Price * cartItem.Quantity);
-
-                var menuItem = restaurantCartItems.FirstOrDefault().MenuItem;
-
                 var restaurantUser = await _userManager.FindByIdAsync(restaurantId) as ApplicationUser;
 
-                var notification = new Notification
-                {
-                    OrderId = order.Id,
-                    TotalAmount = restaurantTotalPrice,
-                    MenuItemPhotoUrl = menuItem.ImagePath,
-                    UserAddress = restaurantUser.Address,
-                    UserId = restaurantId,
-                    CreatedAt = DateTime.UtcNow,
-                };
+                var notifications = new List<Notification>();
 
-                _context.Notifications.Add(notification);
+                foreach (var cartItem in restaurantCartItems)
+                {
+                    var menuItem = cartItem.MenuItem;
+
+                    var notification = new Notification
+                    {
+                        OrderId = order.Id,
+                        TotalAmount = menuItem.Price * cartItem.Quantity,
+                        MenuItemPhotoUrl = menuItem.ImagePath,
+                        UserAddress = user.Address,
+                        UserId = restaurantId,
+                        UserFirstName = user.FirstName,
+                        UserLastName = user.LastName,
+                        CreatedAt = DateTime.UtcNow,
+                    };
+
+                    notifications.Add(notification);
+                }
+
+                _context.Notifications.AddRange(notifications);
                 await _context.SaveChangesAsync();
 
-                await _hubContext.Clients.User(restaurantId).SendAsync("ReceiveOrderNotification",
-                    order.Id, restaurantTotalPrice, menuItem.ImagePath, restaurantUser.Address, restaurantId);
+                await _hubContext.Clients.User(restaurantId).SendAsync("ReceiveOrderNotifications", notifications);
             }
 
             HttpContext.Session.Remove("Cart");

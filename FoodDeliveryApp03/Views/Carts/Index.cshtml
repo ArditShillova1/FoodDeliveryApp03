@@ -1,39 +1,41 @@
 ﻿@model Cart
+<link rel="stylesheet" href="~/css/Cart.css" asp-append-version="true" />
+<h1 class="cart-title">Shopping Cart</h1>
 
-<h1>Shopping Cart</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th>Item Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Items)
-        {
+<div class="cart-container">
+    <table class="cart-table">
+        <thead>
             <tr>
-                <td>@item.MenuItem.Name</td>
-                <td>@item.Quantity</td>
-                <td>@item.MenuItem.Price</td>
-                <tb><img src="@Url.Content(item.MenuItem.ImagePath)" alt="Menu Item Image" /></tb>
-                <td>@(item.Quantity * item.MenuItem.Price)</td>
-                <td>
-                                   
-                    <form asp-action="RemoveFromCart" method="post">
-                        <input type="hidden" name="menuItemId" value="@item.MenuItem.Id" />
-                        <button type="submit">Remove</button>
-                    </form>
-                </td>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Total</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.MenuItem.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.MenuItem.Price</td>
+                    <td><img src="@Url.Content(item.MenuItem.ImagePath)" alt="Menu Item Image" class="item-image" /></td>
+                    <td>@(item.Quantity * item.MenuItem.Price)</td>
+                    <td>
+                        <form asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="menuItemId" value="@item.MenuItem.Id" />
+                            <button type="submit" class="remove-button">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-<a href="@Url.Action("Checkout", "Carts")">Proceed to Checkout</a>
-<div>
-    <a asp-action="ClearCart">Clear Cart</a>
+<div class="cart-actions">
+    <a href="@Url.Action("Checkout", "Carts")" class="checkout-button">Proceed to Checkout</a>
+    <a asp-action="ClearCart" class="clear-cart-button">Clear Cart</a>
 </div>

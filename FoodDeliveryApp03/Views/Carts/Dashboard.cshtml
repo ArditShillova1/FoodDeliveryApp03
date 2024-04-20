@@ -1,9 +1,8 @@
 ﻿<div class="container mt-5">
     <h1>Restaurant Dashboard</h1>
-    <div id="notification-container" class="mt-3" style="max-width:350px;">
-    </div>
+    <div id="notification-container" class="mt-3" style="max-width:350px;"></div>
     <form id="delete-all-notifications-form" action="/Notifications/DeleteAllNotifications" method="POST">
-        <button type="submit" class="btn btn-danger mt-3">Delete All Notifications</button>
+        <button type="submit" class="btn btn-danger mt-3">Delete First Notification</button>
     </form>
 </div>
 
@@ -14,15 +13,16 @@
         .withUrl("/restaurantNotificationHub")
         .build();
 
-    connection.on("ReceiveOrderNotification", (orderId, totalAmount, menuItemPhotoUrl, userAddress, notificationId, restaurantId) => {
+    connection.on("ReceiveOrderNotification", (orderNotification) => {
         const notificationMessage = `
-                New order received for Restaurant: <p>${restaurantId}</p>
-                Order ID:<p>${orderId}</p>
-                Total Amount: <p>$${totalAmount.toFixed(2)}</p>
-                Menu Item Photo: <p><img src="${menuItemPhotoUrl}" alt="Menu Item Photo" width="50" height="50" style="margin-left: 10px; margin-right: 10px;"></p>
-                User Address:<p>${userAddress}</p>
-            `;
-        addNotification(notificationMessage, notificationId, restaurantId);
+            New order received for your restaurant, ${orderNotification.userFirstName} ${orderNotification.userLastName}:
+            <br>
+            Order ID: <p>${orderNotification.orderId}</p>
+            Total Amount: <p>$${orderNotification.totalAmount.toFixed(2)}</p>
+            Menu Item Photo: <p><img src="${orderNotification.menuItemPhotoUrl}" alt="Menu Item Photo" width="150" height="150" style="margin-left: 10px; margin-right: 10px;"></p>
+            User Address: <p>${orderNotification.userAddress}</p>
+        `;
+        addNotification(notificationMessage, orderNotification.notificationId);
     });
 
     connection.start()
@@ -34,7 +34,7 @@
             console.error("SignalR connection error:", error);
         });
 
-    function addNotification(notificationMessage, notificationId, restaurantId) {
+    function addNotification(notificationMessage, notificationId) {
         const notificationContainer = document.getElementById("notification-container");
         const notificationElement = document.createElement("div");
         notificationElement.className = "card mb-4 shadow-sm";
@@ -44,9 +44,8 @@
                 </div>
             `;
         notificationContainer.appendChild(notificationElement);
-
-    
     }
+
     async function loadNotificationsFromDatabase() {
         try {
             const response = await fetch('/Notifications/GetNotifications');
@@ -54,13 +53,14 @@
                 const notifications = await response.json();
                 notifications.forEach(notification => {
                     const notificationMessage = `
-                            New order received for Restaurant: <p>${notification.userId}</p>
+                            New order received from ${notification.userFirstName} ${notification.userLastName}:
+                            <br>
                             Order ID: <p>${notification.orderId}</p>
                             Total Amount: <p>$${notification.totalAmount.toFixed(2)}</p>
                             Menu Item Photo: <p><img src="${notification.menuItemPhotoUrl}" alt="Menu Item Photo" width="150" height="150" style="margin-left: 10px; margin-right: 10px;"></p>
                             User Address: <p>${notification.userAddress}</p>
                         `;
-                    addNotification(notificationMessage, notification.id, notification.userId);
+                    addNotification(notificationMessage, notification.id);
                 });
             } else {
                 console.error('Failed to fetch notifications:', response.statusText);

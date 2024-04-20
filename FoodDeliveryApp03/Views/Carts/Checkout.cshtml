@@ -1,5 +1,8 @@
 ﻿@model FoodDeliveryApp03.Models.Cart
 
+<link rel="stylesheet" href="~/css/CheckOut.css" asp-append-version="true" />
+
+
 <h1>Checkout</h1>
 
 <div class="row">
@@ -33,7 +36,6 @@
             <label for="paymentMethod">Select Payment Method:</label>
             <select id="paymentMethod" name="paymentMethod" class="form-control">
                 <option value="paypal">PayPal</option>
-                <option value="dummy">Dummy Payment</option>
             </select>
             <br />
             <button type="submit" class="btn btn-primary">Proceed to Payment</button>

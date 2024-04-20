@@ -1,4 +1,5 @@
-﻿using FoodDeliveryApp03.Data;
+﻿using Azure.Search.Documents.Models;
+using FoodDeliveryApp03.Data;
 using FoodDeliveryApp03.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -54,5 +55,39 @@ namespace FoodDeliveryApp03.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        [HttpPost]
+        public IActionResult Search(string searchTerm)
+        {
+            var searchResults = new SearchResults();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                var restaurantResults = _context.ProfilePicture
+                    .Where(u => !string.IsNullOrEmpty(u.RestaurantName) && u.RestaurantName.Contains(searchTerm))
+                    .ToList();
+
+                searchResults.RestaurantName = restaurantResults;
+
+                var menuItems = _context.MenuItems
+                    .Where(m => m.Name.Contains(searchTerm))
+                    .ToList();
+                searchResults.MenuItems = menuItems;
+            }
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+
+                ViewData["Message"] = "Please enter a valid search term.";
+                return View();
+            }
+
+                return View("SearchResults", searchResults);
+        }
+
+
+
+
+
     }
 }

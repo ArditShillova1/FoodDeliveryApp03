@@ -1,0 +1,49 @@
+﻿@model SearchResults
+
+<h2>Search Results:</h2>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Results:</h3>
+        <ul>
+            @if (Model.RestaurantName.Any())
+            {
+                <li>
+                    <h4>Restaurants:</h4>
+                    <ul>
+                        @foreach (var restaurant in Model.RestaurantName)
+                        {
+                            <li class="list-group-item">
+                                <a href="@Url.Action("Profile", "Profile", new { id = restaurant.UserId })">
+                                    @restaurant.RestaurantName
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
+            @if (Model.MenuItems.Any())
+            {
+                <li>
+                    <h4>Menu Items:</h4>
+                    <ul>
+                        @foreach (var menuItem in Model.MenuItems)
+                        {
+                            <li class="list-group-item">
+                                <a href="@Url.Action("Profile", "Profile", new { id = menuItem.UserId })">
+                                    @menuItem.Name - $@menuItem.Price
+                                </a>
+                                <img src="@menuItem.ImagePath" alt="@menuItem.Name" class="menu-item-image" height="30px" width="30px" style="margin-left: 10px;" />
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
+            @if (!Model.RestaurantName.Any() && !Model.MenuItems.Any())
+            {
+                <li>No results found.</li>
+            }
+        </ul>
+    </div>
+</div>

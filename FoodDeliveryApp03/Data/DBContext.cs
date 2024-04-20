@@ -17,22 +17,13 @@ namespace FoodDeliveryApp03.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<ProfilePicture> ProfilePicture { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<IdentityUser> Costumers { get; set; }
         public DbSet<FoodDeliveryApp03.Models.Cart> Cart { get; set; }
         public DbSet<Review> Reviews{ get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Menu>()
-                .Property(m => m.Price)
-                .HasColumnType("decimal(18, 2)");
-
             modelBuilder.Entity<Order>()
                 .Property(o => o.TotalAmount)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<OrderItem>()
-                .Property(oi => oi.Price)
                 .HasColumnType("decimal(18, 2)");
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Order)

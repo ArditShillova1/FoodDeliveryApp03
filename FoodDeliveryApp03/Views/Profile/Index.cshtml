@@ -2,63 +2,56 @@
     var profile = ViewBag.Profile as FoodDeliveryApp03.Models.ProfilePicture;
     var menuItems = ViewBag.MenuItems as List<FoodDeliveryApp03.Models.MenuItem>;
 }
-<style>
-    #map{
-        height:300px;
-        width:600px;
-    }
-</style>
 
-@if (profile != null)
-{
-    <h1>Restaurant Profile - @profile.RestaurantName</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+</head>
+<body>
+    <div id="container">
+        <div id="profile-picture">
+            <div id="background-overlay"></div>
+            <a href="@Url.Action("Create", "Profile")" class="create-button">Create Profile</a>
+            
+            @if (!string.IsNullOrEmpty(profile.ImagePath))
+            {
+                <img class="profile-image" src="@Url.Content(profile.ImagePath)" alt="Profile Picture" />
+            }
+            else
+            {
+                <p>No profile picture available.</p>
+            }
+            <h1 id="restaurant-name">@profile.RestaurantName</h1>
+        </div>
 
-    <div>
-        <h3>Profile Picture</h3>
-        <a href="@Url.Action("Create", "Profile")" class="btn btn-primary">Create</a>
+        <h2 id="menu">Menu Items:</h2>
 
-        @if (!string.IsNullOrEmpty(profile.ImagePath))
-        {
-            <img src="@Url.Content(profile.ImagePath)" alt="Profile Picture" width="200" height="200" />
-        }
-        else
-        {
-            <p>No profile picture available.</p>
-        }
+        <div class="menu-items">
+            @foreach (var menuItem in menuItems)
+            {
+                <div class="menu-item">
+                    <p>@menuItem.Name - @menuItem.Description</p>
+                    <img src="@Url.Content(menuItem.ImagePath)" alt="Picture" />
+                    <form asp-controller="MenuItems" asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@menuItem.Id" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+
+            }
+        </div>
+
+        <a href="@Url.Action("Create", "MenuItems")" class="create-button1">Create Menu Item</a>
+        <h2>Restaurant Location</h2>
+
+        <div id="map"></div>
     </div>
-
-    <h2>Menu Items:</h2>
-    <a href="@Url.Action("Create", "MenuItems")" class="btn btn-primary">Create</a>
-    <ul>
-        @foreach (var menuItem in menuItems)
-        {
-            <li>
-                @menuItem.Name - @menuItem.Description
-                <img src="@Url.Content(menuItem.ImagePath)" alt="Picture" width="70" height="70" />
-                <a asp-action="Details" asp-route-id="@menuItem.Id">Details</a>
-                <a asp-action="Delete" asp-controller="MenuItems" asp-route-id="@menuItem.Id">Delete</a>
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <a href="@Url.Action("Create", "Profile")" class="btn btn-primary">Create</a>
-    <p>No profile found.</p>
-}
-<style>
-    #map {
-        height: 400px;
-        width: 100%;
-    }
-</style>
-
-<h2>Restaurant Location</h2>
-<div id="map"></div>
+</body>
+</html>
 
 <script>
     function initMap() {
-
         var latitude = @profile.Latitude;
         var longitude = @profile.Longitude;
 
@@ -76,5 +69,4 @@ else
 
     window.onload = initMap;
 </script>
-
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBluF2ghHonSKrpvcxRbGVB7BI2UzFKf3s&callback=initMap"></script>

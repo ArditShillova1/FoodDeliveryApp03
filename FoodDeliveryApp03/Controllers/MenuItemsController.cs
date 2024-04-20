@@ -187,7 +187,7 @@ namespace FoodDeliveryApp03.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Profile");
         }
 
         private bool MenuItemExists(int id)
